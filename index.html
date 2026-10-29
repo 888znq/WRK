@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ext OS: multi-account setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+  --bg:#e9eef3; --surface:#ffffff; --ink:#14233a; --muted:#52627a; --line:#b4c0cf;
+  --android:#0b7f67; --android-soft:#d5efe8;
+  --win:#2a5bd0; --win-soft:#dce6fb;
+  --hub:#b7790b; --hub-soft:#f8e8c4;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#101a29; --surface:#1a2740; --ink:#e6edf7; --muted:#9aaac2; --line:#3a4c69;
+    --android:#43c9a6; --android-soft:#143d37;
+    --win:#7aa2ff; --win-soft:#1b2f5c;
+    --hub:#f0b94a; --hub-soft:#493710;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#101a29; --surface:#1a2740; --ink:#e6edf7; --muted:#9aaac2; --line:#3a4c69;
+  --android:#43c9a6; --android-soft:#143d37;
+  --win:#7aa2ff; --win-soft:#1b2f5c;
+  --hub:#f0b94a; --hub-soft:#493710;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding:28px 18px 64px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:26px}
+h1{font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.1;margin:0 0 6px;font-weight:800;letter-spacing:-.02em}
+header p{margin:0;color:var(--muted);max-width:52ch}
+button{font:inherit;color:inherit;cursor:pointer}
+.theme{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:.85rem}
+:focus-visible{outline:3px solid var(--hub);outline-offset:2px}
+
+.lanes{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:720px){.lanes{grid-template-columns:1fr}}
+.lane{display:flex;flex-direction:column;align-items:center}
+.node{width:100%;max-width:340px;text-align:center;background:var(--surface);border:2px solid var(--c);border-radius:12px;padding:10px 14px;font-weight:600}
+.node small{display:block;font-weight:400;color:var(--muted);font-size:.82rem}
+.android{--c:var(--android);--soft:var(--android-soft)}
+.windows{--c:var(--win);--soft:var(--win-soft)}
+.hub{--c:var(--hub);--soft:var(--hub-soft)}
+.node.root{background:var(--c);color:var(--bg);border-color:var(--c)}
+.node.root small{color:inherit;opacity:.85}
+.arrow{width:2px;height:22px;background:var(--line);position:relative;flex:none}
+.arrow::after{content:"";position:absolute;bottom:-1px;left:-4px;border:5px solid transparent;border-top:7px solid var(--line);border-bottom:0}
+
+.steps{width:100%;max-width:340px;background:var(--soft);border:2px solid var(--c);border-radius:12px;padding:12px 14px}
+.steps h2{font-size:1rem;margin:0 0 4px;color:var(--c);display:flex;justify-content:space-between;gap:8px}
+.bar{height:5px;border-radius:3px;background:var(--surface);margin:6px 0 10px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--c);transition:width .25s}
+.steps ol{list-style:none;margin:0;padding:0}
+.steps li{margin:0}
+.steps label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer;font-size:.92rem}
+.steps input{margin-top:4px;accent-color:var(--c);width:16px;height:16px;flex:none}
+.steps input:checked + span{color:var(--muted);text-decoration:line-through}
+.reset{margin-top:8px;background:none;border:0;color:var(--muted);font-size:.8rem;text-decoration:underline;padding:0}
+
+.merge{display:grid;grid-template-columns:1fr 1fr;height:34px;margin-top:0}
+.merge div{border-bottom:2px solid var(--line)}
+.merge div:first-child{border-left:2px solid var(--line);margin-left:25%;border-bottom-left-radius:10px}
+.merge div:last-child{border-right:2px solid var(--line);margin-right:25%;border-bottom-right-radius:10px}
+@media(max-width:720px){.merge{display:none}}
+.shared{display:flex;flex-direction:column;align-items:center;margin-top:0}
+@media(max-width:720px){.shared{margin-top:16px}}
+.shared .arrow:first-child{height:14px}
+.shared .node{max-width:420px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;margin-top:0;position:relative}
+.panes{display:flex;flex-direction:column;align-items:center;width:100%}
+.fork{width:50%;height:22px;border:2px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0;margin-top:0}
+.pane-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.pane{background:var(--surface);border:2px solid var(--c);border-radius:12px;padding:16px;text-align:center;min-height:96px;display:flex;flex-direction:column;justify-content:center}
+.pane b{font-size:1.05rem}
+.pane small{color:var(--muted)}
+.switch{margin:16px auto 0;max-width:520px;width:100%;text-align:center;background:var(--hub-soft);border:2px dashed var(--hub);border-radius:12px;padding:12px 16px;font-size:.92rem}
+.switch strong{display:block;color:var(--hub)}
+.loop{display:flex;justify-content:flex-end;margin-top:6px;color:var(--muted);font-size:.82rem;max-width:520px;margin-inline:auto}
+@media(max-width:560px){.pane-row{grid-template-columns:1fr}.fork{width:2px;border:0;background:var(--line);height:14px}}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Ext OS across many accounts</h1>
+      <p>One extension folder, loaded into a separate browser profile (Windows) or clone (Android) for each account. Tick the steps as you go.</p>
+    </div>
+    <button class="theme" id="theme" type="button" aria-label="Toggle light or dark theme">Theme</button>
+  </header>
+
+  <div class="lanes">
+    <section class="lane android" aria-label="Android path">
+      <div class="node root">Mobile<small>Device</small></div><div class="arrow"></div>
+      <div class="node">Android</div><div class="arrow"></div>
+      <div class="node">Titanium Browser</div><div class="arrow"></div>
+      <div class="node">Shelter app<small>Work-profile clone</small></div><div class="arrow"></div>
+      <div class="node">Titanium + 1 clone</div><div class="arrow"></div>
+      <div class="steps" data-key="android">
+        <h2>Steps: Android <span class="count"></span></h2>
+        <div class="bar"><i></i></div>
+        <ol>
+          <li><label><input type="checkbox"><span>Install Shelter</span></label></li>
+          <li><label><input type="checkbox"><span>Let it create the work profile</span></label></li>
+          <li><label><input type="checkbox"><span>In Shelter, choose Clone to Work Profile and pick Titanium</span></label></li>
+          <li><label><input type="checkbox"><span>Open the clone from the badged Titanium icon</span></label></li>
+          <li><label><input type="checkbox"><span>Install Ext OS in the clone, the same way as the main browser</span></label></li>
+          <li><label><input type="checkbox"><span>Log into the AI sites</span></label></li>
+        </ol>
+        <button class="reset" type="button">Clear ticks</button>
+      </div>
+    </section>
+
+    <section class="lane windows" aria-label="Windows path">
+      <div class="node root">Laptop / Desktop<small>Device</small></div><div class="arrow"></div>
+      <div class="node">Windows</div><div class="arrow"></div>
+      <div class="node">Chrome</div><div class="arrow"></div>
+      <div class="node">Chrome: Add profile<small>Built in, default</small></div><div class="arrow"></div>
+      <div class="node">Profile 1 … n</div><div class="arrow"></div>
+      <div class="steps" data-key="windows">
+        <h2>Steps: Windows <span class="count"></span></h2>
+        <div class="bar"><i></i></div>
+        <ol>
+          <li><label><input type="checkbox"><span>Click the profile icon</span></label></li>
+          <li><label><input type="checkbox"><span>Add profile and sign in with the account</span></label></li>
+          <li><label><input type="checkbox"><span>Name the profile after the account</span></label></li>
+          <li><label><input type="checkbox"><span>Open chrome://extensions, turn on Developer mode, Load unpacked (same folder)</span></label></li>
+          <li><label><input type="checkbox"><span>Log into the AI sites</span></label></li>
+          <li><label><input type="checkbox"><span>Repeat for each account</span></label></li>
+        </ol>
+        <button class="reset" type="button">Clear ticks</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="merge" aria-hidden="true"><div></div><div></div></div>
+
+  <div class="shared hub">
+    <div class="arrow" style="height:14px"></div>
+    <div class="node">Firebase-synced Ext OS project folder<small>Hosted on GitHub Pages</small></div><div class="arrow"></div>
+    <div class="node">Extension: Load unpacked<small>Same Ext OS in every profile or clone</small></div><div class="arrow"></div>
+    <div class="node root">Ext OS</div>
+    <div class="panes">
+      <div class="fork" aria-hidden="true"></div>
+      <div class="pane-row">
+        <div class="pane hub"><b>Left pane</b><small>AI Compile</small></div>
+        <div class="pane hub"><b>Right pane</b><small>AI</small></div>
+      </div>
+    </div>
+    <div class="switch">
+      <strong>Switch account on the same website</strong>
+      Click to change account in the right pane. This means switching profile (Windows) or clone (Android).
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  try{var t=localStorage.getItem("extos-theme");if(t)root.setAttribute("data-theme",t)}catch(e){}
+  document.getElementById("theme").addEventListener("click",function(){
+    var dark=root.getAttribute("data-theme")?root.getAttribute("data-theme")==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+    var next=dark?"light":"dark";
+    root.setAttribute("data-theme",next);
+    try{localStorage.setItem("extos-theme",next)}catch(e){}
+  });
+  document.querySelectorAll(".steps").forEach(function(box){
+    var key="extos-"+box.dataset.key, boxes=box.querySelectorAll("input"), bar=box.querySelector(".bar i"), count=box.querySelector(".count");
+    function render(){
+      var n=0;boxes.forEach(function(b){if(b.checked)n++});
+      bar.style.width=(n/boxes.length*100)+"%";
+      count.textContent=n+"/"+boxes.length;
+      try{localStorage.setItem(key,JSON.stringify(Array.prototype.map.call(boxes,function(b){return b.checked})))}catch(e){}
+    }
+    try{var saved=JSON.parse(localStorage.getItem(key)||"[]");boxes.forEach(function(b,i){b.checked=!!saved[i]})}catch(e){}
+    boxes.forEach(function(b){b.addEventListener("change",render)});
+    box.querySelector(".reset").addEventListener("click",function(){boxes.forEach(function(b){b.checked=false});render()});
+    render();
+  });
+})();
+</script>
+</body>
+</html>
