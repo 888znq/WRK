@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ext OS: multi-account setup</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
   box-sizing:border-box;
@@ -35,161 +35,120 @@
 }
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
-.wrap{max-width:980px;margin:0 auto;padding:28px 18px 64px}
-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:26px}
-h1{font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.1;margin:0 0 6px;font-weight:800;letter-spacing:-.02em}
-header p{margin:0;color:var(--muted);max-width:52ch}
-button{font:inherit;color:inherit;cursor:pointer}
-.theme{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:.85rem}
+body{margin:0;background:var(--surface);color:var(--ink);font-family:"JetBrains Mono",Consolas,Menlo,"DejaVu Sans Mono",monospace;font-size:min(14px,1.2vh,1.9vw);line-height:1.3}
+@supports (height:1dvh){body{font-size:min(14px,1.2dvh,1.9vw)}}
+.wrap{max-width:50em;margin:0 auto;padding:1em .8em;text-align:center}
 :focus-visible{outline:3px solid var(--hub);outline-offset:2px}
 
-.lanes{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:720px){.lanes{grid-template-columns:1fr}}
+.lanes{display:grid;grid-template-columns:1fr 1fr;gap:1.4em}
 .lane{display:flex;flex-direction:column;align-items:center}
-.node{width:100%;max-width:340px;text-align:center;background:var(--surface);border:2px solid var(--c);border-radius:12px;padding:10px 14px;font-weight:600}
-.node small{display:block;font-weight:400;color:var(--muted);font-size:.82rem}
+.node{width:100%;text-align:center;padding:2px 0}
+.node small{display:block}
 .android{--c:var(--android);--soft:var(--android-soft)}
 .windows{--c:var(--win);--soft:var(--win-soft)}
 .hub{--c:var(--hub);--soft:var(--hub-soft)}
-.node.root{background:var(--c);color:var(--bg);border-color:var(--c)}
-.node.root small{color:inherit;opacity:.85}
-.arrow{width:2px;height:22px;background:var(--line);position:relative;flex:none}
-.arrow::after{content:"";position:absolute;bottom:-1px;left:-4px;border:5px solid transparent;border-top:7px solid var(--line);border-bottom:0}
+.arrow{line-height:.85;padding:.1em 0;font-size:.9em}
+.fork-d{position:relative;margin:.9em 25% 0;height:1.2em;border:1px solid var(--ink);border-bottom:0}
+.fork-d::before{content:"";position:absolute;left:50%;top:-.9em;height:.9em;border-left:1px solid var(--ink)}
+.arr2{display:grid;grid-template-columns:1fr 1fr;gap:1.4em;font-size:.9em;line-height:1;padding:0}
 
-.steps{width:100%;max-width:340px;background:var(--soft);border:2px solid var(--c);border-radius:12px;padding:12px 14px}
-.steps h2{font-size:1rem;margin:0 0 4px;color:var(--c);display:flex;justify-content:space-between;gap:8px}
-.bar{height:5px;border-radius:3px;background:var(--surface);margin:6px 0 10px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--c);transition:width .25s}
-.steps ol{list-style:none;margin:0;padding:0}
-.steps li{margin:0}
-.steps label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer;font-size:.92rem}
-.steps input{margin-top:4px;accent-color:var(--c);width:16px;height:16px;flex:none}
-.steps input:checked + span{color:var(--muted);text-decoration:line-through}
-.reset{margin-top:8px;background:none;border:0;color:var(--muted);font-size:.8rem;text-decoration:underline;padding:0}
+.steps{position:relative;width:100%;margin-top:.9em;padding:.9em .8em .5em;border:2px solid var(--c);text-align:left;flex:1}
+.steps h2{position:absolute;top:-.75em;left:.7em;margin:0;padding:0 .4em;background:var(--surface);color:var(--c);font-size:1em;font-weight:700}
+.steps ol{margin:0;padding-left:1.6em}
+.steps li{padding:1px 0}
 
-.merge{display:grid;grid-template-columns:1fr 1fr;height:34px;margin-top:0}
-.merge div{border-bottom:2px solid var(--line)}
-.merge div:first-child{border-left:2px solid var(--line);margin-left:25%;border-bottom-left-radius:10px}
-.merge div:last-child{border-right:2px solid var(--line);margin-right:25%;border-bottom-right-radius:10px}
-@media(max-width:720px){.merge{display:none}}
-.shared{display:flex;flex-direction:column;align-items:center;margin-top:0}
-@media(max-width:720px){.shared{margin-top:16px}}
-.shared .arrow:first-child{height:14px}
-.shared .node{max-width:420px}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;margin-top:0;position:relative}
-.panes{display:flex;flex-direction:column;align-items:center;width:100%}
-.fork{width:50%;height:22px;border:2px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0;margin-top:0}
-.pane-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
-.pane{background:var(--surface);border:2px solid var(--c);border-radius:12px;padding:16px;text-align:center;min-height:96px;display:flex;flex-direction:column;justify-content:center}
-.pane b{font-size:1.05rem}
-.pane small{color:var(--muted)}
-.switch{margin:16px auto 0;max-width:520px;width:100%;text-align:center;background:var(--hub-soft);border:2px dashed var(--hub);border-radius:12px;padding:12px 16px;font-size:.92rem}
-.switch strong{display:block;color:var(--hub)}
-.loop{display:flex;justify-content:flex-end;margin-top:6px;color:var(--muted);font-size:.82rem;max-width:520px;margin-inline:auto}
-@media(max-width:560px){.pane-row{grid-template-columns:1fr}.fork{width:2px;border:0;background:var(--line);height:14px}}
-@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+.merge{position:relative;margin:0 25%;height:1.2em;border:1px solid var(--ink);border-top:0}
+.merge::after{content:"";position:absolute;left:50%;bottom:-.9em;height:.9em;border-left:1px solid var(--ink)}
+.fork-p{position:relative;margin:.9em 25% 0;height:1.2em;border:1px solid var(--ink);border-bottom:0}
+.fork-p::before{content:"";position:absolute;left:50%;top:-.9em;height:.9em;border-left:1px solid var(--ink)}
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:.2em 1.4em}
+.sw{grid-column:2}
+.ic{display:inline-block;font-size:1.1em;line-height:1;margin-right:.35em;vertical-align:middle}
+.ic img{width:1.2em;height:1.2em;object-fit:contain;vertical-align:middle}
+.node a{color:inherit;text-decoration:underline dotted;text-underline-offset:.2em;overflow-wrap:anywhere}
+.node a:hover{text-decoration:underline}
+.ic.ic-chrome{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAflBMVEUomkjgNioAAAD7xB0Ycef5vAv49/TpQzQckDv//P9dmuyTu/H/BABPpmJSrmroW1L1zlD/Xl7pW1H8z0794JuWzaHvnJ3//wA+ierpY1vz3plVsm2eVTKWzabsop/70VEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiXrNkAAAAIHRSTlP9/gD9//7/+v8C//8B+5iW9gL0kSktJQH/Yv9t////bUlPgvMAAAG0SURBVHjafZWLkoIwDEVDq5QCpbyRdV3//y83faeA3lGHscd70xAqsCAJ+F61FqPAl9arZKyVcRnCxcDYuosiCul9tV/nILBVE8yzeo2kA9uW7UfMouNu1iIoB6aLawnNBhlA/A184goBzhPBFj5yWKbwJJiNfcp1oEk34MD24pswfUcI5DlXiODlNa6tBGBd1pjxr0T99HeqiSG3ALEcy6j+zr3wYsYanwC/gTNuTf141I1xTY78jTUqAJW45ubVUJJzCZgcLDG3vkXVJj2SM3QGdJbEzwjKMoGTA60lGt4y2Q15EIJshU0ONlhlADmoSGYV+ipTdrT8RfBxAvkZVNeg6bcDVbS8jOYeTY5QXW8m3ETfHqvL9nhBDsKh4WksJncLXbY638IIziBJla/jUPAoaceMkmnMXoTDMWMp26UHKUicGVx8FCgJyriWL1VVhDOPAqnRoVXlP6jhhjVmVRLxvEIwj3Z3wd2zYHf2IP7NEJc3D16Qd8JtWzz2zuk0V5IT97CjiuzD+tGjeelsHzPDaWbb8bDHi+Xp+lg5rn/P+Tr9+1i6Dme+7/tpmrE0SH8f/1dOG0bFakyLAAAAAElFTkSuQmCC")}
+.ic.big{display:block;width:2.2em;height:2.2em;margin:0 auto .15em}
+.icrow{display:flex;justify-content:center;gap:.5em;margin-bottom:.15em}
+.ic.big-e{font-size:2.2em;line-height:1;margin:0}
+.ic-shelter,.ic-titanium,.ic-chrome{width:1.2em;height:1.2em;background-size:contain;background-repeat:no-repeat;background-position:center}
+.ic-shelter{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAAYFBMVEUeJQMBBAEBd3D448Tr1q0GgnrpuUj0xFYSKxQA//8eJQMAdnbdrTsAYVygrJcAUEoAiICSimpNSiaKbyUA/39gYkWsijQAVQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7BSa3AAAAGHRSTlP8Bfv///7//1UBmwn/nP9s/////wL//wMcUCxoAAABWklEQVR42m2UjdrCIAiFUXFqm+6v+u7/Tj9ws8HmqfYQvs8BKQUjFV9Q9YoqDSI+iZPrQgrRWIMidBQl9Pe0UWbQL6UpeNT6fB4VKySSxZGKSDRIpNA55M+mKFDF0CE70UMVBGV0MEyhtJLQ2hjWqqBr+xgCckv14cQYQFQbSCEM/JpQ1hPQxswwDYfC1oV2tgCGti+FexfilWlnq33iUEDXlKaAyA1N9A4ooHg5rbwvkiOWdxnWTrnV3VR6PclR8tClUxvmdnf6iGHO9hRqBlt+Jmj0hyzcWmoQ/XbJ5KVn1Yx8NglGM1pfv1kvKPSX0QjmZ0VUwXstMnrz/ykZ2yjCCmIpPxtvafmAjPUtd5c5ITOa+KMU5m2kxfNIUWAX//Dyti61E0xhtg8qn0y7MKgwTX7xomN7tKuunjcdwMxNLbVwjjV1v58SW8d5znme+QYYU/emS6kfm38OzA1snkbOygAAAABJRU5ErkJggg==")}
+.ic-titanium{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAAYFBMVEUeHi1RUWYcHDGgoLMXFyzNzdFqao8bGzEAAH88PGOvr8kbGzAAAAAjIzr7+/s1NU8bGzANDSSUlLaamshHR2wAAFUqKkLo6OoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADMsExWAAAAGHRSTlMg/mH/2P/+kgL///0A///+sf/+//4D///sprGBAAABiElEQVR42o2Ui5KDIAxFgzys8ogihf//0w0MKNR2x0zHdujxEpIbwHQB0yyE1kLMEwzr9fttzLTpLrapLA6QgQEpGHwqTfpLTAN0lxnE4D+mUZDT+8lou+XsgR59Pvae19sAffq1XVtLj4iI0SqlUJMMvIbNmJfOSa6WJYTAj+PwcTMvuISsRu5ckjI5x+2uw8E9PxRJQSfEkvOYf6B3iQl2eO8J2gxcGWFyjPQoiHfJYobWoDXAdbTVsT3aEnFnTpLUQUJ0QJjPzRxvTKY4vYIq5H9mEO3s3KG2Z2ikd3QoZRMnhEl2DFFJ7liECGoMJTFC0sVQ618hG+IdYlgV6nYBd5k+oNSYmpMN3xNvUClBULjfS9CKM5diKqoaE3Is5nq5JbeFrblJaMe24AlBbrAqnaSODg2+LGyyVVTxBOVuL6vg5VFCyHTRU06cXLYsimfTedbPApku2xfJp7Y4ttm3i2zfj0G4TUMZhDJS9udM1ZF6NpwPx/zZhfHw6nl2idXrcPt2Hf4BB+E6cqZ1etsAAAAASUVORK5CYII=")}
+.ic-chrome{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAMAAADW3miqAAAAYFBMVEX7+vnfNSknmkgYcuf7wx75vAsYjzrmRDT80VlUq2noZ17uo5785aYzgehspOyUvfCVzqa33sWbWzVSnTpxvIaYrTGerWN5ZDQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACo8ejtAAAAGHRSTlP////////////////////////////////gEcFnAAABN0lEQVR42oWU2bKEIAxEY0R2HZ3t/v+fXtYYEGv6wbL02N0ECwAu56xVylrn4E5WTSRlx8jU6Yq5HlHB1v2wyZj9xfTUmGkpN91KUa/Li+hBysyXLzt96PVySicIn+RBa/ZiEUmLWDJk2PS2dZ7XLdyIxgqxWIX0x1z0YJQAOAKECWJMpDxZedgjBDlsZgLQZ56JUAx0sHFoC1aihUxMWzm0ApylEItVmxbzRA/hEBIFMgX6G8SlaXJIjornoes8gtT9OgKCjgrh0Q9TFMgDNQ8jbbeFFPbuLWsrwzf4W5H8r1QIZUgsOsxCUHpgiApme3yyG/lpjXgrlFKmy6tplD6U2OsM87XBu6defVhXqzHiTE9Ra90eBrtka6yMv5wrRlbuM7SpWFx8Xb6+Pev2d/hzQGvfBv0DoVkPkCtSiRgAAAAASUVORK5CYII=")}
+.steps li::before{margin-right:.3em}
+.android .steps li:nth-child(1)::before{content:"📥"}
+.android .steps li:nth-child(2)::before{content:"💼"}
+.android .steps li:nth-child(3)::before{content:"🧬"}
+.android .steps li:nth-child(4)::before{content:"🚀"}
+.android .steps li:nth-child(5)::before{content:"🧩"}
+.android .steps li:nth-child(6)::before{content:"🔑"}
+.windows .steps li:nth-child(1)::before{content:"👤"}
+.windows .steps li:nth-child(2)::before{content:"➕"}
+.windows .steps li:nth-child(3)::before{content:"🏷️"}
+.windows .steps li:nth-child(4)::before{content:"🛠️"}
+.windows .steps li:nth-child(5)::before{content:"🔑"}
+.windows .steps li:nth-child(6)::before{content:"🔁"}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div>
-      <h1>Ext OS across many accounts</h1>
-      <p>One extension folder, loaded into a separate browser profile (Windows) or clone (Android) for each account. Tick the steps as you go.</p>
-    </div>
-    <button class="theme" id="theme" type="button" aria-label="Toggle light or dark theme">Theme</button>
-  </header>
+  <div class="node"><span class="ic">🖥️</span>[ Devices ]</div>
+    <div class="fork-d" aria-hidden="true"></div>
+    <div class="arr2" aria-hidden="true"><div>▼</div><div>▼</div></div>
 
   <div class="lanes">
     <section class="lane android" aria-label="Android path">
-      <div class="node root">Mobile<small>Device</small></div><div class="arrow"></div>
-      <div class="node">Android</div><div class="arrow"></div>
-      <div class="node">Titanium Browser</div><div class="arrow"></div>
-      <div class="node">Shelter app<small>Work-profile clone</small></div><div class="arrow"></div>
-      <div class="node">Titanium + 1 clone</div><div class="arrow"></div>
-      <div class="steps" data-key="android">
-        <h2>Steps: Android <span class="count"></span></h2>
-        <div class="bar"><i></i></div>
-        <ol>
-          <li><label><input type="checkbox"><span>Install Shelter</span></label></li>
-          <li><label><input type="checkbox"><span>Let it create the work profile</span></label></li>
-          <li><label><input type="checkbox"><span>In Shelter, choose Clone to Work Profile and pick Titanium</span></label></li>
-          <li><label><input type="checkbox"><span>Open the clone from the badged Titanium icon</span></label></li>
-          <li><label><input type="checkbox"><span>Install Ext OS in the clone, the same way as the main browser</span></label></li>
-          <li><label><input type="checkbox"><span>Log into the AI sites</span></label></li>
-        </ol>
-        <button class="reset" type="button">Clear ticks</button>
-      </div>
-    </section>
+          <div class="node"><span class="ic">📱</span>[ Mobile ]</div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic">🤖</span>[ Android ]</div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic ic-titanium big"></span>[ Titanium Browser ]<small><a href="https://github.com/jqssun/android-titanium-browser" target="_blank" rel="noopener noreferrer">GitHub repo ↗</a></small></div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic ic-shelter big"></span>[ Shelter app ]<small>(work-profile clone)</small></div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic ic-titanium"></span><span class="ic">🧬</span>[ Titanium + 1 clone ]</div>
+          <div class="steps">
+            <h2><span class="ic">🤖</span>STEPS: ANDROID</h2>
+            <ol>
+              <li>Install Shelter</li>
+              <li>Let it create the work profile</li>
+              <li>Shelter: Clone to Work Profile, pick Titanium</li>
+              <li>Open the clone from the badged Titanium icon</li>
+              <li>Install Ext OS in the clone (same way as the main)</li>
+              <li>Log into the AI sites</li>
+            </ol>
+          </div>
+        </section>
 
     <section class="lane windows" aria-label="Windows path">
-      <div class="node root">Laptop / Desktop<small>Device</small></div><div class="arrow"></div>
-      <div class="node">Windows</div><div class="arrow"></div>
-      <div class="node">Chrome</div><div class="arrow"></div>
-      <div class="node">Chrome: Add profile<small>Built in, default</small></div><div class="arrow"></div>
-      <div class="node">Profile 1 … n</div><div class="arrow"></div>
-      <div class="steps" data-key="windows">
-        <h2>Steps: Windows <span class="count"></span></h2>
-        <div class="bar"><i></i></div>
-        <ol>
-          <li><label><input type="checkbox"><span>Click the profile icon</span></label></li>
-          <li><label><input type="checkbox"><span>Add profile and sign in with the account</span></label></li>
-          <li><label><input type="checkbox"><span>Name the profile after the account</span></label></li>
-          <li><label><input type="checkbox"><span>Open chrome://extensions, turn on Developer mode, Load unpacked (same folder)</span></label></li>
-          <li><label><input type="checkbox"><span>Log into the AI sites</span></label></li>
-          <li><label><input type="checkbox"><span>Repeat for each account</span></label></li>
-        </ol>
-        <button class="reset" type="button">Clear ticks</button>
-      </div>
-    </section>
+          <div class="node"><span class="ic">💻</span>[ Laptop / Desktop ]</div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic">🪟</span>[ Windows ]</div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic ic-chrome big"></span>[ Chrome ]<small><a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">Install Chrome ↗</a></small></div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic ic-chrome big"></span><span class="ic">👥</span>[ Chrome: Add profile ]<small>(built-in, default)</small></div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic">🗂️</span>[ Profile 1 … n ]</div>
+          <div class="steps">
+            <h2><span class="ic">🪟</span>STEPS: WINDOWS</h2>
+            <ol>
+              <li>Click the profile icon</li>
+              <li>Add profile, sign in with the account</li>
+              <li>Name it after the account</li>
+              <li>chrome://extensions, Developer mode, Load unpacked (same folder)</li>
+              <li>Log into the AI sites</li>
+              <li>Repeat for each account</li>
+            </ol>
+          </div>
+        </section>
   </div>
 
-  <div class="merge" aria-hidden="true"><div></div><div></div></div>
-
-  <div class="shared hub">
-    <div class="arrow" style="height:14px"></div>
-    <div class="node">Firebase-synced Ext OS project folder<small>Hosted on GitHub Pages</small></div><div class="arrow"></div>
-    <div class="node">Extension: Load unpacked<small>Same Ext OS in every profile or clone</small></div><div class="arrow"></div>
-    <div class="node root">Ext OS</div>
+  <div class="merge" aria-hidden="true"></div>
+    <div class="arrow" style="padding-top:.9em">▼</div>
+    <div class="node"><span class="icrow"><span class="ic ic-gitpage big-e">☁️</span></span>[ Firebase Synced ExtOS Project Folder ]<small>(hosted on GitHub Pages)<br><a href="https://888znq.github.io/SYN/" target="_blank" rel="noopener noreferrer">888znq.github.io/SYN ↗</a></small></div>
+    <div class="arrow">│<br>▼</div>
+    <div class="node"><span class="ic">📦</span>[ Extension Load Unpacked ]<small>(same Ext OS in every profile / clone)</small></div>
+    <div class="arrow">│<br>▼</div>
+    <div class="node"><span class="icrow"><span class="ic ic-extos big-e">🧩</span></span>[ Ext OS ]</div>
+    <div class="fork-p" aria-hidden="true"></div>
     <div class="panes">
-      <div class="fork" aria-hidden="true"></div>
-      <div class="pane-row">
-        <div class="pane hub"><b>Left pane</b><small>AI Compile</small></div>
-        <div class="pane hub"><b>Right pane</b><small>AI</small></div>
-      </div>
-    </div>
-    <div class="switch">
-      <strong>Switch account on the same website</strong>
-      Click to change account in the right pane. This means switching profile (Windows) or clone (Android).
+      <div class="node">▼<br><span class="icrow"><span class="ic ic-compile big-e">🛠️</span></span>[ LEFT PANE: AI Compile ]</div>
+      <div class="node">▼<br><span class="ic">🧠</span>[ RIGHT PANE: AI ]</div>
+      <div class="node sw">▲<br><span class="ic">🔄</span>[ Click to change account for same website ]<small>(= switch profile / clone)</small></div>
     </div>
   </div>
-</div>
-
-<script>
-(function(){
-  var root=document.documentElement;
-  try{var t=localStorage.getItem("extos-theme");if(t)root.setAttribute("data-theme",t)}catch(e){}
-  document.getElementById("theme").addEventListener("click",function(){
-    var dark=root.getAttribute("data-theme")?root.getAttribute("data-theme")==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
-    var next=dark?"light":"dark";
-    root.setAttribute("data-theme",next);
-    try{localStorage.setItem("extos-theme",next)}catch(e){}
-  });
-  document.querySelectorAll(".steps").forEach(function(box){
-    var key="extos-"+box.dataset.key, boxes=box.querySelectorAll("input"), bar=box.querySelector(".bar i"), count=box.querySelector(".count");
-    function render(){
-      var n=0;boxes.forEach(function(b){if(b.checked)n++});
-      bar.style.width=(n/boxes.length*100)+"%";
-      count.textContent=n+"/"+boxes.length;
-      try{localStorage.setItem(key,JSON.stringify(Array.prototype.map.call(boxes,function(b){return b.checked})))}catch(e){}
-    }
-    try{var saved=JSON.parse(localStorage.getItem(key)||"[]");boxes.forEach(function(b,i){b.checked=!!saved[i]})}catch(e){}
-    boxes.forEach(function(b){b.addEventListener("change",render)});
-    box.querySelector(".reset").addEventListener("click",function(){boxes.forEach(function(b){b.checked=false});render()});
-    render();
-  });
-})();
-</script>
-</body>
+  </body>
 </html>
