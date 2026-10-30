@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -89,20 +89,104 @@ body{margin:0;background:var(--surface);color:var(--ink);font-family:"JetBrains 
 .windows .steps li:nth-child(5)::before{content:"🔑"}
 .windows .steps li:nth-child(6)::before{content:"🔁"}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--surface:#f3eee4;--card:#fbf8f2;--ink:#1c1813;--muted:#6b6256;--line:#d9d0c0;--accent:#b7421f;--android:#b7421f;--win:#1f5f5b;--android-soft:#fbf8f2;--win-soft:#fbf8f2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--surface:#16130f;--card:#1f1b15;--ink:#eee7d9;--muted:#a39886;--line:#3a332a;--accent:#e2704a;--android:#e2704a;--win:#6bc3b8;--android-soft:#1f1b15;--win-soft:#1f1b15}}
+:root[data-theme="dark"]{--surface:#16130f;--card:#1f1b15;--ink:#eee7d9;--muted:#a39886;--line:#3a332a;--accent:#e2704a;--android:#e2704a;--win:#6bc3b8;--android-soft:#1f1b15;--win-soft:#1f1b15}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--surface);color:var(--ink);font-size:min(13px,1.05vh,1.8vw)}
+@supports (height:1dvh){body{font-size:min(13px,1.05dvh,1.8vw)}}
+.wrap{max-width:58em}
+.jbk-bar{display:flex;justify-content:space-between;align-items:baseline;gap:1em;padding-bottom:.7em;border-bottom:1px solid var(--line);text-align:left}
+.jbk-logo{font-family:"Instrument Serif",Georgia,serif;font-size:2em;line-height:1;color:var(--ink);text-decoration:none}
+.jbk-logo span{color:var(--accent)}
+.jbk-bar nav{display:flex;gap:1.2em;flex-wrap:wrap;font-size:.9em}
+.jbk-bar nav a{color:var(--ink);text-decoration:none}
+.jbk-bar nav a b{color:var(--accent);font-weight:400;margin-right:.35em;font-size:.8em}
+.jbk-bar nav a:hover{color:var(--accent)}
+.jbk-hero{text-align:left;padding:1em 0 .9em}
+.jbk-eye{margin:0 0 .4em;color:var(--accent);font-size:.85em}
+.jbk-hero h1{margin:0;font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:3.1em;line-height:1;letter-spacing:-.01em}
+.jbk-hero h1 em{color:var(--accent)}
+.jbk-lede{margin:.5em 0 0;max-width:46em;color:var(--muted);font-size:.95em}
+.jbk-stats{display:flex;flex-wrap:wrap;gap:.4em 2em;list-style:none;margin:.9em 0 .9em;padding:.6em 0 0;border-top:1px solid var(--line)}
+.jbk-stats li{color:var(--muted);font-size:.85em}
+.jbk-stats b{display:block;color:var(--ink);font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:2em;line-height:1.05}
+section[id],.node[id]{scroll-margin-top:1em}
+.node{border:1px solid var(--line);background:var(--card);border-radius:.6em;padding:.4em .9em;max-width:24em;margin-inline:auto}
+.node small{color:var(--muted);font-size:.85em}
+.node a{color:var(--accent);text-underline-offset:.2em}
+.arrow,.arr2{color:var(--accent)}
+.fork-d,.merge,.fork-p{border-color:var(--accent)}
+.fork-d::before,.merge::after,.fork-p::before{border-left-color:var(--accent)}
+.steps{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:.6em}
+.steps h2{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;font-size:1.3em;top:-.75em}
+.steps li::marker{color:var(--c)}
+.panes .node{max-width:none;border:0;background:none}
+.panes .node.sw{border:1px dashed var(--accent);background:var(--card);border-radius:.6em}
+.jbk-foot{max-width:58em;margin:0 auto;padding:.9em .8em 1.4em;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5em 1.5em;font-size:.85em;color:var(--muted)}
+.jbk-foot strong{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:1.6em;line-height:1;color:var(--ink)}
+.jbk-foot strong span{color:var(--accent)}
+.jbk-foot a{color:var(--ink);text-decoration:none;margin-right:1em}
+.jbk-foot a:hover{color:var(--accent)}
+.wrap{padding-top:.6em;padding-bottom:.4em}
+.jbk-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:.5em 2em;flex-wrap:wrap;padding:.6em 0 .5em}
+.jbk-eye,.jbk-lede{display:none}
+.jbk-hero h1{font-size:2.4em}
+.jbk-stats{margin:0;padding:0;border:0;gap:.2em 1.4em}
+.jbk-stats b{display:inline;font-size:1.5em;margin-right:.3em}
+.jbk-foot{padding:.5em .8em .6em}
+.jbk-bar,.jbk-hero,.jbk-foot{display:none}
+.lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.android>:nth-child(5),.android>:nth-child(6),.android>:nth-child(7),.android>:nth-child(8),.windows>:nth-child(5),.windows>:nth-child(6),.windows>:nth-child(7),.windows>:nth-child(8){display:none}
+.steps{display:none}
+.duo{position:relative;display:block;width:2.42em;margin:0 auto .15em}
+.duo .ic.big{margin:0}
+.duo .sm{position:absolute;right:-.5em;bottom:-.35em;width:1.25em;height:1.25em;margin:0;border-radius:50%;box-shadow:0 0 0 2px var(--card)}
+.duo .emo{background:var(--card);font-size:1em;line-height:1.25em;text-align:center}
+.pf{display:flex;justify-content:center;flex-wrap:wrap;gap:.9em;padding:.2em 0 .4em}
+.pf .pfi{position:relative;display:inline-block;width:2em;height:2em;margin:0;border-radius:50%;box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--p)}
+.pf .pfi i{position:absolute;top:-.45em;right:-.45em;width:1.5em;height:1.5em;border-radius:50%;background:var(--p);color:#fff;font-size:.65em;font-style:normal;font-weight:700;line-height:1.5em;text-align:center;box-shadow:0 0 0 2px var(--card)}
+.pf .sbg{position:absolute;right:-.5em;bottom:-.5em;font-size:1em;width:1em;height:1em;margin:0;border-radius:50%;box-shadow:0 0 0 2px var(--card)}
+.pf .emo{background:var(--card);font-size:.9em;width:1.1em;height:1.1em;line-height:1.1em;text-align:center}
+.pfl{margin-top:.2em}
+</style>
 </head>
 <body>
 <div class="wrap">
+  <header class="jbk-bar" id="top">
+    <a class="jbk-logo" href="#top">ext<span>.</span></a>
+    <nav>
+      <a href="#android"><b>01</b>Android</a>
+      <a href="#windows"><b>02</b>Windows</a>
+      <a href="#extos"><b>03</b>Ext OS</a>
+      <a href="https://888znq.github.io/SYN/" target="_blank" rel="noopener noreferrer">SYN ↗</a>
+    </nav>
+  </header>
+  <section class="jbk-hero">
+    <p class="jbk-eye">01 / Setup</p>
+    <h1>Ext OS across <em>many accounts</em>.</h1>
+    <p class="jbk-lede">One extension folder, loaded into a separate Chrome profile on Windows or a Shelter clone on Android for each account.</p>
+    <ul class="jbk-stats">
+      <li><b>2</b>platforms</li>
+      <li><b>1</b>shared folder</li>
+      <li><b>n</b>profiles or clones</li>
+      <li><b>2</b>panes</li>
+    </ul>
+  </section>
   <div class="node"><span class="ic">🖥️</span>[ Devices ]</div>
     <div class="fork-d" aria-hidden="true"></div>
     <div class="arr2" aria-hidden="true"><div>▼</div><div>▼</div></div>
 
   <div class="lanes">
-    <section class="lane android" aria-label="Android path">
+    <section class="lane android" id="android" aria-label="Android path">
           <div class="node"><span class="ic">📱</span>[ Mobile ]</div><div class="arrow">│<br>▼</div>
           <div class="node"><span class="ic">🤖</span>[ Android ]</div><div class="arrow">│<br>▼</div>
-          <div class="node"><span class="ic ic-titanium big"></span>[ Titanium Browser ]<small><a href="https://github.com/jqssun/android-titanium-browser" target="_blank" rel="noopener noreferrer">GitHub repo ↗</a></small></div><div class="arrow">│<br>▼</div>
-          <div class="node"><span class="ic ic-shelter big"></span>[ Shelter app ]<small>(work-profile clone)</small></div><div class="arrow">│<br>▼</div>
-          <div class="node"><span class="ic ic-titanium"></span><span class="ic">🧬</span>[ Titanium + 1 clone ]</div>
+          <div class="node"><span class="duo"><span class="ic ic-titanium big"></span><span class="ic ic-shelter sm"></span></span><span class="lbl">[ Titanium Browser ]</span><small><a href="https://github.com/jqssun/android-titanium-browser" target="_blank" rel="noopener noreferrer">GitHub repo ↗</a> · <a href="https://f-droid.org/packages/net.typeblog.shelter/" target="_blank" rel="noopener noreferrer">Shelter ↗</a></small></div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="ic ic-shelter big"></span><span class="lbl">[ Shelter app ]</span><small>(work-profile clone)<br><a href="https://f-droid.org/packages/net.typeblog.shelter/" target="_blank" rel="noopener noreferrer">Get on F-Droid ↗</a></small></div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="pf"><span class="ic pfi ic-titanium" style="--p:#b7421f" title="Profile 1"><span class="ic sbg ic-shelter"></span><i>1</i></span><span class="ic pfi ic-titanium" style="--p:#1f5f5b" title="Profile 2"><span class="ic sbg ic-shelter"></span><i>2</i></span><span class="ic pfi ic-titanium" style="--p:#3b6fd4" title="Profile 3"><span class="ic sbg ic-shelter"></span><i>3</i></span><span class="ic pfi ic-titanium" style="--p:#8a3fb0" title="Profile 4"><span class="ic sbg ic-shelter"></span><i>4</i></span><span class="ic pfi ic-titanium" style="--p:#c28a00" title="Profile 5"><span class="ic sbg ic-shelter"></span><i>5</i></span></span><span class="lbl">[ Titanium + 5 profiles ]</span><small class="pfl"><a href="https://github.com/jqssun/android-titanium-browser" target="_blank" rel="noopener noreferrer">Titanium</a> / <a href="https://f-droid.org/packages/net.typeblog.shelter/" target="_blank" rel="noopener noreferrer">Shelter</a></small></div>
           <div class="steps">
             <h2><span class="ic">🤖</span>STEPS: ANDROID</h2>
             <ol>
@@ -116,12 +200,12 @@ body{margin:0;background:var(--surface);color:var(--ink);font-family:"JetBrains 
           </div>
         </section>
 
-    <section class="lane windows" aria-label="Windows path">
+    <section class="lane windows" id="windows" aria-label="Windows path">
           <div class="node"><span class="ic">💻</span>[ Laptop / Desktop ]</div><div class="arrow">│<br>▼</div>
           <div class="node"><span class="ic">🪟</span>[ Windows ]</div><div class="arrow">│<br>▼</div>
-          <div class="node"><span class="ic ic-chrome big"></span>[ Chrome ]<small><a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">Install Chrome ↗</a></small></div><div class="arrow">│<br>▼</div>
+          <div class="node"><span class="duo"><span class="ic ic-chrome big"></span><span class="ic sm emo">👥</span></span><span class="lbl">[ Chrome ]</span><small><a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">Install Chrome ↗</a><br>(built-in profiles)</small></div><div class="arrow">│<br>▼</div>
           <div class="node"><span class="ic ic-chrome big"></span><span class="ic">👥</span>[ Chrome: Add profile ]<small>(built-in, default)</small></div><div class="arrow">│<br>▼</div>
-          <div class="node"><span class="ic">🗂️</span>[ Profile 1 … n ]</div>
+          <div class="node"><span class="pf"><span class="ic pfi ic-chrome" style="--p:#b7421f" title="Profile 1"><span class="ic sbg emo">👥</span><i>1</i></span><span class="ic pfi ic-chrome" style="--p:#1f5f5b" title="Profile 2"><span class="ic sbg emo">👥</span><i>2</i></span><span class="ic pfi ic-chrome" style="--p:#3b6fd4" title="Profile 3"><span class="ic sbg emo">👥</span><i>3</i></span><span class="ic pfi ic-chrome" style="--p:#8a3fb0" title="Profile 4"><span class="ic sbg emo">👥</span><i>4</i></span><span class="ic pfi ic-chrome" style="--p:#c28a00" title="Profile 5"><span class="ic sbg emo">👥</span><i>5</i></span></span><span class="lbl">[ Profile 1 … n ]</span><small class="pfl"><a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">Chrome</a></small></div>
           <div class="steps">
             <h2><span class="ic">🪟</span>STEPS: WINDOWS</h2>
             <ol>
@@ -138,17 +222,43 @@ body{margin:0;background:var(--surface);color:var(--ink);font-family:"JetBrains 
 
   <div class="merge" aria-hidden="true"></div>
     <div class="arrow" style="padding-top:.9em">▼</div>
-    <div class="node"><span class="icrow"><span class="ic ic-gitpage big-e">☁️</span></span>[ Firebase Synced ExtOS Project Folder ]<small>(hosted on GitHub Pages)<br><a href="https://888znq.github.io/SYN/" target="_blank" rel="noopener noreferrer">888znq.github.io/SYN ↗</a></small></div>
+    <div class="node"><span class="icrow"><span class="ic ic-gitpage big-e">☁️</span></span><span class="lbl">[ Firebase Synced ExtOS Project Folder ]</span><small>(hosted on GitHub Pages)<br><a href="https://888znq.github.io/SYN/" target="_blank" rel="noopener noreferrer">888znq.github.io/SYN ↗</a></small></div>
     <div class="arrow">│<br>▼</div>
     <div class="node"><span class="ic">📦</span>[ Extension Load Unpacked ]<small>(same Ext OS in every profile / clone)</small></div>
     <div class="arrow">│<br>▼</div>
-    <div class="node"><span class="icrow"><span class="ic ic-extos big-e">🧩</span></span>[ Ext OS ]</div>
+    <div class="node" id="extos"><span class="icrow"><span class="ic ic-extos big-e">🧩</span></span>[ Ext OS ]</div>
     <div class="fork-p" aria-hidden="true"></div>
     <div class="panes">
       <div class="node">▼<br><span class="icrow"><span class="ic ic-compile big-e">🛠️</span></span>[ LEFT PANE: AI Compile ]</div>
       <div class="node">▼<br><span class="ic">🧠</span>[ RIGHT PANE: AI ]</div>
-      <div class="node sw">▲<br><span class="ic">🔄</span>[ Click to change account for same website ]<small>(= switch profile / clone)</small></div>
+      <div class="node sw">▲<br><span class="ic">🔄</span><span class="lbl">[ Click to change account for same website ]</span><small>(= switch profile / clone)</small></div>
     </div>
   </div>
+  <footer class="jbk-foot">
+    <div><strong>ext<span>.</span></strong> One folder, one profile per account.</div>
+    <div>
+      <a href="https://github.com/jqssun/android-titanium-browser" target="_blank" rel="noopener noreferrer">Titanium ↗</a>
+      <a href="https://f-droid.org/packages/net.typeblog.shelter/" target="_blank" rel="noopener noreferrer">Shelter ↗</a>
+      <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">Chrome ↗</a>
+      <a href="https://888znq.github.io/SYN/" target="_blank" rel="noopener noreferrer">SYN ↗</a>
+    </div>
+  </footer>
+  <script>
+  (function(){
+    var b=document.body,d=document.documentElement;
+    function fit(){
+      var lo=3,hi=16,h=window.innerHeight,w=window.innerWidth,i,mid;
+      for(i=0;i<9;i++){
+        mid=(lo+hi)/2;
+        b.style.fontSize=mid+"px";
+        if(d.scrollHeight<=h&&d.scrollWidth<=w){lo=mid}else{hi=mid}
+      }
+      b.style.fontSize=lo+"px";
+    }
+    fit();
+    window.addEventListener("resize",fit);
+    if(document.fonts&&document.fonts.ready){document.fonts.ready.then(fit)}
+  })();
+  </script>
   </body>
 </html>
