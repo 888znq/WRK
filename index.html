@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -142,6 +142,8 @@ section[id],.node[id]{scroll-margin-top:1em}
 .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .android>:nth-child(5),.android>:nth-child(6),.android>:nth-child(7),.android>:nth-child(8),.windows>:nth-child(5),.windows>:nth-child(6),.windows>:nth-child(7),.windows>:nth-child(8){display:none}
 .steps{display:none}
+.panes .node.sw{display:none}
+.arrow:has(+ .node[id="extos"]){display:none}
 .duo{position:relative;display:block;width:2.42em;margin:0 auto .15em}
 .duo .ic.big{margin:0}
 .duo .sm{position:absolute;right:-.5em;bottom:-.35em;width:1.25em;height:1.25em;margin:0;border-radius:50%;box-shadow:0 0 0 2px var(--card)}
@@ -152,6 +154,17 @@ section[id],.node[id]{scroll-margin-top:1em}
 .pf .sbg{position:absolute;right:-.5em;bottom:-.5em;font-size:1em;width:1em;height:1em;margin:0;border-radius:50%;box-shadow:0 0 0 2px var(--card)}
 .pf .emo{background:var(--card);font-size:.9em;width:1.1em;height:1.1em;line-height:1.1em;text-align:center}
 .pfl{margin-top:.2em}
+.pf{gap:1.15em;padding:.3em 0 .75em}
+.pf .pfi{width:2.2em;height:2.2em}
+.pf .pfi::after{content:"🧩";left:-.45em;bottom:-.5em;width:1.25em;height:1.25em;display:flex;align-items:center;justify-content:center;font-size:.8em;line-height:1;background:var(--card);border-radius:50%;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line)}
+.pf .sbg{right:-.45em;bottom:-.5em;width:1.25em;height:1.25em;border-radius:50%;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line)}
+.pf .sbg.emo{display:flex;align-items:center;justify-content:center;font-size:.8em;line-height:1;background:var(--card)}
+.pf .pfi i{top:-.5em;right:-.5em}
+.ic.bigapp{display:none}
+.pf .pfi::after{content:none}
+.pf::after{content:none}
+.pf .pfi::after{content:"🧩";position:absolute;left:-.5em;bottom:-.5em;width:1.1em;height:1.1em;border-radius:50%;background:var(--card);box-shadow:0 0 0 2px var(--card);font-size:.9em;line-height:1.1em;text-align:center}
+.node[id="extos"]{display:none}
 </style>
 </head>
 <body>
@@ -186,7 +199,7 @@ section[id],.node[id]{scroll-margin-top:1em}
           <div class="node"><span class="ic">🤖</span>[ Android ]</div><div class="arrow">│<br>▼</div>
           <div class="node"><span class="duo"><span class="ic ic-titanium big"></span><span class="ic ic-shelter sm"></span></span><span class="lbl">[ Titanium Browser ]</span><small><a href="https://github.com/jqssun/android-titanium-browser" target="_blank" rel="noopener noreferrer">GitHub repo ↗</a> · <a href="https://f-droid.org/packages/net.typeblog.shelter/" target="_blank" rel="noopener noreferrer">Shelter ↗</a></small></div><div class="arrow">│<br>▼</div>
           <div class="node"><span class="ic ic-shelter big"></span><span class="lbl">[ Shelter app ]</span><small>(work-profile clone)<br><a href="https://f-droid.org/packages/net.typeblog.shelter/" target="_blank" rel="noopener noreferrer">Get on F-Droid ↗</a></small></div><div class="arrow">│<br>▼</div>
-          <div class="node"><span class="pf"><span class="ic pfi ic-titanium" style="--p:#b7421f" title="Profile 1"><span class="ic sbg ic-shelter"></span><i>1</i></span><span class="ic pfi ic-titanium" style="--p:#1f5f5b" title="Profile 2"><span class="ic sbg ic-shelter"></span><i>2</i></span><span class="ic pfi ic-titanium" style="--p:#3b6fd4" title="Profile 3"><span class="ic sbg ic-shelter"></span><i>3</i></span><span class="ic pfi ic-titanium" style="--p:#8a3fb0" title="Profile 4"><span class="ic sbg ic-shelter"></span><i>4</i></span><span class="ic pfi ic-titanium" style="--p:#c28a00" title="Profile 5"><span class="ic sbg ic-shelter"></span><i>5</i></span></span><span class="lbl">[ Titanium + 5 profiles ]</span><small class="pfl"><a href="https://github.com/jqssun/android-titanium-browser" target="_blank" rel="noopener noreferrer">Titanium</a> / <a href="https://f-droid.org/packages/net.typeblog.shelter/" target="_blank" rel="noopener noreferrer">Shelter</a></small></div>
+          <div class="node"><span class="ic ic-titanium bigapp"></span><span class="pf"><span class="ic pfi ic-titanium" style="--p:#b7421f" title="Profile 1"><span class="ic sbg ic-shelter"></span><i>1</i></span><span class="ic pfi ic-titanium" style="--p:#1f5f5b" title="Profile 2"><span class="ic sbg ic-shelter"></span><i>2</i></span><span class="ic pfi ic-titanium" style="--p:#3b6fd4" title="Profile 3"><span class="ic sbg ic-shelter"></span><i>3</i></span><span class="ic pfi ic-titanium" style="--p:#8a3fb0" title="Profile 4"><span class="ic sbg ic-shelter"></span><i>4</i></span><span class="ic pfi ic-titanium" style="--p:#c28a00" title="Profile 5"><span class="ic sbg ic-shelter"></span><i>5</i></span><span class="ic pfi ic-titanium" style="--p:#d1495b" title="Profile 6"><span class="ic sbg ic-shelter"></span><i>6</i></span><span class="ic pfi ic-titanium" style="--p:#4f7a28" title="Profile 7"><span class="ic sbg ic-shelter"></span><i>7</i></span></span><span class="lbl">[ Titanium + 7 profiles ]</span><small class="pfl"><a href="https://github.com/jqssun/android-titanium-browser" target="_blank" rel="noopener noreferrer">Titanium</a> / <a href="https://f-droid.org/packages/net.typeblog.shelter/" target="_blank" rel="noopener noreferrer">Shelter</a></small></div>
           <div class="steps">
             <h2><span class="ic">🤖</span>STEPS: ANDROID</h2>
             <ol>
@@ -205,7 +218,7 @@ section[id],.node[id]{scroll-margin-top:1em}
           <div class="node"><span class="ic">🪟</span>[ Windows ]</div><div class="arrow">│<br>▼</div>
           <div class="node"><span class="duo"><span class="ic ic-chrome big"></span><span class="ic sm emo">👥</span></span><span class="lbl">[ Chrome ]</span><small><a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">Install Chrome ↗</a><br>(built-in profiles)</small></div><div class="arrow">│<br>▼</div>
           <div class="node"><span class="ic ic-chrome big"></span><span class="ic">👥</span>[ Chrome: Add profile ]<small>(built-in, default)</small></div><div class="arrow">│<br>▼</div>
-          <div class="node"><span class="pf"><span class="ic pfi ic-chrome" style="--p:#b7421f" title="Profile 1"><span class="ic sbg emo">👥</span><i>1</i></span><span class="ic pfi ic-chrome" style="--p:#1f5f5b" title="Profile 2"><span class="ic sbg emo">👥</span><i>2</i></span><span class="ic pfi ic-chrome" style="--p:#3b6fd4" title="Profile 3"><span class="ic sbg emo">👥</span><i>3</i></span><span class="ic pfi ic-chrome" style="--p:#8a3fb0" title="Profile 4"><span class="ic sbg emo">👥</span><i>4</i></span><span class="ic pfi ic-chrome" style="--p:#c28a00" title="Profile 5"><span class="ic sbg emo">👥</span><i>5</i></span></span><span class="lbl">[ Profile 1 … n ]</span><small class="pfl"><a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">Chrome</a></small></div>
+          <div class="node"><span class="ic ic-chrome bigapp"></span><span class="pf"><span class="ic pfi ic-chrome" style="--p:#b7421f" title="Profile 1"><span class="ic sbg emo">👥</span><i>1</i></span><span class="ic pfi ic-chrome" style="--p:#1f5f5b" title="Profile 2"><span class="ic sbg emo">👥</span><i>2</i></span><span class="ic pfi ic-chrome" style="--p:#3b6fd4" title="Profile 3"><span class="ic sbg emo">👥</span><i>3</i></span><span class="ic pfi ic-chrome" style="--p:#8a3fb0" title="Profile 4"><span class="ic sbg emo">👥</span><i>4</i></span><span class="ic pfi ic-chrome" style="--p:#c28a00" title="Profile 5"><span class="ic sbg emo">👥</span><i>5</i></span><span class="ic pfi ic-chrome" style="--p:#d1495b" title="Profile 6"><span class="ic sbg emo">👥</span><i>6</i></span><span class="ic pfi ic-chrome" style="--p:#4f7a28" title="Profile 7"><span class="ic sbg emo">👥</span><i>7</i></span></span><span class="lbl">[ Profile 1 … n ]</span><small class="pfl"><a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">Chrome</a></small></div>
           <div class="steps">
             <h2><span class="ic">🪟</span>STEPS: WINDOWS</h2>
             <ol>
@@ -222,9 +235,9 @@ section[id],.node[id]{scroll-margin-top:1em}
 
   <div class="merge" aria-hidden="true"></div>
     <div class="arrow" style="padding-top:.9em">▼</div>
-    <div class="node"><span class="icrow"><span class="ic ic-gitpage big-e">☁️</span></span><span class="lbl">[ Firebase Synced ExtOS Project Folder ]</span><small>(hosted on GitHub Pages)<br><a href="https://888znq.github.io/SYN/" target="_blank" rel="noopener noreferrer">888znq.github.io/SYN ↗</a></small></div>
+    <div class="node"><span class="icrow"><span class="ic ic-gitpage big-e">☁️</span></span><span class="lbl">[ Firebase Synced ExtOS Project Folder ]</span><small><span class="lbl">(hosted on GitHub Pages)</span><a href="https://888znq.github.io/SYN/" target="_blank" rel="noopener noreferrer">SYN ↗</a></small></div>
     <div class="arrow">│<br>▼</div>
-    <div class="node"><span class="ic">📦</span>[ Extension Load Unpacked ]<small>(same Ext OS in every profile / clone)</small></div>
+    <div class="node" style="display:none"><span class="ic">📦</span>[ Extension Load Unpacked ]<small>(same Ext OS in every profile / clone)</small></div>
     <div class="arrow">│<br>▼</div>
     <div class="node" id="extos"><span class="icrow"><span class="ic ic-extos big-e">🧩</span></span>[ Ext OS ]</div>
     <div class="fork-p" aria-hidden="true"></div>
@@ -262,3 +275,13 @@ section[id],.node[id]{scroll-margin-top:1em}
   </script>
   </body>
 </html>
+
+=== SESSION CHANGES (patches applied since this file was loaded) ===
+05:56 L228 (+0 lines): rel="noopener noreferrer">SYN ↗</a>
+05:57 L157 (+2 lines): .pf{gap:.9em}
+05:58 L157 (+5 lines): .pf{gap:1.15em;padding:.3em 0 .75em}
+05:59 L163 (+3 lines): .pf .pfi i{top:-.5em;right:-.5em}
+05:59 L202 (+0 lines): <span class="ic ic-titanium bigapp"></span><span class="pf"><span clas
+05:59 L221 (+0 lines): <span class="ic ic-chrome bigapp"></span><span class="pf"><span class=
+06:00 L163 (+0 lines): .ic.bigapp{display:none}
+06:00 L165 (+0 lines): .pf::after{content:none}​​​
